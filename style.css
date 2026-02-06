@@ -613,6 +613,10 @@ body, html {
         font-size: 12px;
     }
 
+    .s2_layout_wrapper {
+        height: 90vh;
+    }
+
     #slide2 .s2-fadeLine-top1 {
         width: 90%;
     }
