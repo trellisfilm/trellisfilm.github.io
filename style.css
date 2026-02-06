@@ -672,7 +672,7 @@ body, html {
 
     .s3-content-container {
         width: 95%;
-        height: 80vh;
+        height: 60vh;
     }
 
     #s3-poster-container {
@@ -697,6 +697,11 @@ body, html {
     
     .vl {
         height: 350px;
+    }
+
+    .s4-content-container {
+        width: 95%;
+        height: 60vh;
     }
     
     #s4-maintext {
