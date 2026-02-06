@@ -358,6 +358,7 @@ body, html {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 90vh;
 }
 
 #s3-poster-container {
@@ -408,6 +409,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 90vh;
 }
 
 #s4-maintext {
@@ -666,6 +668,24 @@ body, html {
     #s2-alttext {
         font-size: 10px;
         letter-spacing: 0px;
+    }
+
+    .s3-content-container {
+        width: 95%;
+        height: 80vh;
+    }
+
+    #s3-poster-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-height: 60vh; /* change to desired height (e.g., 400px) */
+        overflow-y: auto;
+    }
+
+    #s3-poster-container img{
+        width: 150px;
+        height: 200px;
     }
 
     #s3-maintext {
