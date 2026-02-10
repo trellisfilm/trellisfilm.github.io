@@ -912,19 +912,13 @@ body, html {
         padding-right: 15px;
     }
     
-    #s4-linkList img {
-        margin-bottom: 20px;
-        width: 30px;
-        height: 30px;
-    }
-    
     .s4-slideshow-container {
         width: 100%;
         max-width: 350px;
     }
     
     .s4-slide img {
-        width: 320px;
+        width: 1000px;
         height: auto;
     }
 
