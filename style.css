@@ -338,9 +338,7 @@ body, html {
     flex-direction: column;
 }
 
-#slide3 .slide-title,
-#slide4 .slide-title,
-#slide5 .slide-title {
+#slide3 .slide-title {
     opacity: 0;
     text-align: center;
     margin-top: 2vh;
@@ -348,6 +346,16 @@ body, html {
     font-weight: bolder;
     font-family: century-gothic, sans-serif;;
     color: #191919;
+}
+
+#slide4 .slide-title {
+    opacity: 0;
+    text-align: center;
+    margin-top: 2vh;
+    font-size: 18px;
+    font-weight: bolder;
+    font-family: century-gothic, sans-serif;;
+    color: white;
 }
 
 #slide3 .slide-title.animate-on-view {
