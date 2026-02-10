@@ -432,7 +432,7 @@ body, html {
     font-style: bold;
 }
 
-#s4-linkList {
+/* #s4-linkList {
     justify-content: center;
     display: flex;
     flex-direction: row;
@@ -445,7 +445,7 @@ body, html {
     margin-right: 25px;
     margin-left: 25px;
     color:#D1B000;
-}
+} */
 
 .s4-slideshow-container {
     width: 100%;
