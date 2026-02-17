@@ -95,23 +95,23 @@
             <div class="s3-carousel-container">
                 <button class="s3-nav-button s3-left-button" onclick="s3ShowPrevSlide()">‹</button>
                 <div id="s3-poster-container">
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/ColdJustice.jpg" alt="Poster 1" style="cursor: pointer;">
+                    <a>
+                        <img id="ColdJusticePoster" src="image/ColdJustice.jpg" alt="Poster 1" style="cursor: pointer;">
                     </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/ProsecutingEvilWithKelly.jpg" alt="Poster 2" style="cursor: pointer;">
+                    <a>
+                        <img id="ProsecutingEvilWithKellyPoster" src="image/ProsecutingEvilWithKellySiegler.jpg" alt="Poster 2" style="cursor: pointer;">
                     </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/Onside.jpg" alt="Poster 3" style="cursor: pointer;">
+                    <a>
+                        <img id="OnsidePoster" src="image/Onside.jpg" alt="Poster 3" style="cursor: pointer;">
                     </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/TheFalloftheHouseOfMurdaugh.jpg" alt="Poster 4" style="cursor: pointer;">
+                    <a>
+                        <img id="TheFalloftheHouseOfMurdaughPoster" src="image/TheFalloftheHouseOfMurdaugh.jpg" alt="Poster 4" style="cursor: pointer;">
                     </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/DisruptAndDismantle.jpg" alt="Poster 4" style="cursor: pointer;">
+                    <a>
+                        <img id="DisruptAndDismantlePoster" src="image/DisruptAndDismantle.jpg" alt="Poster 4" style="cursor: pointer;">
                     </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/StreetOutlaws.jpg" alt="Poster 4" style="cursor: pointer;">
+                    <a>
+                        <img id="StreetOutlawsPoster" src="image/StreetOutlaws.jpg" alt="Poster 4" style="cursor: pointer;">
                     </a>
                 </div>
                 <button class="s3-nav-button s3-right-button" onclick="s3ShowNextSlide()">›</button>
@@ -339,13 +339,13 @@
         const s3PosterInfoData = [
             { 
                 title: "Cold Justice: Season 7 & 8", 
-                text: "A powerful documentary exploring justice through a modern lens. I traveled nationwide as a camera and production assistant, working closely with former prosecutor Kelly Siegler and her team to help investigate and resolve cold cases.",
-                images: ["image/bts/ColdJustice1.jpg", "image/bts/ColdJustice2.jpg"]
+                text: "A powerful docuseries exploring justice through a modern lens. I traveled nationwide as a camera and production assistant, working closely with former prosecutor Kelly Siegler and her team to help investigate and resolve cold cases.",
+                images: ["image/bts/ColdJustice1.jpg", "image/bts/ColdJustice2.jpg", "image/bts/ColdJustice3.jpg", "image/bts/ColdJustice4.jpg", "image/bts/ColdJustice5.jpg"]
             },
             { 
-                title: "Prosecuting Evil Iwth Kelly Siegler", 
+                title: "Prosecuting Evil with Kelly Siegler", 
                 text: "Investigating the stories behind high-profile criminal cases. I contributed to production and filming interviews with Kelly Siegler as she looks back at homocide investigations in her home state of Texas.",
-                images: ["image/bts/ColdJustice1.jpg"]
+                images: ["image/bts/ProsecutingEvilWithKellySiegler1.jpg", "image/bts/ProsecutingEvilWithKellySiegler2.jpg"]
             },
             { 
                 title: "Onside", 
@@ -355,22 +355,24 @@
             { 
                 title: "The Fall of the House of Murdaugh", 
                 text: "A documentary series chronicling a prominent family's legal downfall. I assisted in production and cinematography, contributing to in-depth interviews with notable figures including Fox News anchor Martha MacCallum.",
-                images: ["image/bts/ColdJustice1.jpg"]
+                images: ["image/bts/TheFallOfTheHouseOfMurdaugh1.jpg"]
             },
             { 
                 title: "Disrupt and Dismantle", 
                 text: "Breaking barriers and challenging the status quo. I supported the production team on this project hosted by acclaimed journalist and producer Soledad O'Brien.",
-                images: ["image/bts/ColdJustice1.jpg"]
+                images: ["image/bts/DisruptAndDismantle1.jpg", "image/bts/DisruptAndDismantle2.jpg"]
             },
             { 
                 title: "Street Outlaws", 
                 text: "Raw, authentic stories from the streets. I contributed to production and event coverage during competitive racing events, capturing authentic narrative content for this motorsports-focused series.",
-                images: ["image/bts/ColdJustice1.jpg"]
+                images: ["image/bts/StreetOutlaws1.jpg", "image/bts/StreetOutlaws2.jpg"]
             }
         ];
         
         let s3InfoCurrentSetIndex = 0;
         let s3InfoCurrentImageIndex = 0;
+        let s3UserClickedPoster = false;
+        let s3SlideshowInterval = null;
         const s3PosterTitle = document.getElementById('s3-poster-title');
         const s3PosterText = document.getElementById('s3-poster-text');
         const s3PosterPhotoImg = document.querySelector('.s3-poster-info-photo img');
@@ -393,17 +395,43 @@
                 s3PosterPhotoImg.alt = `${currentSet.title} BTS ${imageIndex + 1}`;
             }
 
-            // Advance to next image; when images for this set are exhausted, move to next set
+            // Advance to next image
             s3InfoCurrentImageIndex++;
-            if (s3InfoCurrentImageIndex >= images.length) {
-                s3InfoCurrentSetIndex = (s3InfoCurrentSetIndex + 1) % s3PosterInfoData.length;
-                s3InfoCurrentImageIndex = 0;
+            
+            // If user hasn't clicked a poster, switch to next set when images exhausted
+            if (!s3UserClickedPoster) {
+                if (s3InfoCurrentImageIndex >= images.length) {
+                    s3InfoCurrentSetIndex = (s3InfoCurrentSetIndex + 1) % s3PosterInfoData.length;
+                    s3InfoCurrentImageIndex = 0;
+                }
+            } else {
+                // If user clicked a poster, loop only through this set's images
+                if (s3InfoCurrentImageIndex >= images.length) {
+                    s3InfoCurrentImageIndex = 0;
+                }
             }
         }
         
         // Start the slideshow - display first item immediately, then update every 10 seconds
         updateS3PosterInfo();
-        setInterval(updateS3PosterInfo, 10000);
+        s3SlideshowInterval = setInterval(updateS3PosterInfo, 10000);
+        
+        // Add click event listeners to posters to lock into a specific set
+        s3Posters.forEach((poster, index) => {
+            poster.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Mark that user has clicked a poster
+                s3UserClickedPoster = true;
+                
+                // Set the current set to the clicked poster's index
+                s3InfoCurrentSetIndex = index;
+                s3InfoCurrentImageIndex = 0;
+                
+                // Update the info immediately
+                updateS3PosterInfo();
+            });
+        });
         
         // Clone all posters for infinite loop effect
         const s3PosterClones = Array.from(s3Posters).map(poster => poster.cloneNode(true));
