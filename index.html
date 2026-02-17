@@ -116,8 +116,18 @@
                 </div>
                 <button class="s3-nav-button s3-right-button" onclick="s3ShowNextSlide()">›</button>
             </div>
+            <!-- <div class="s3-poster-info-slideshow">
+                <p id="s3-poster-title"></p>
+                <p id="s3-poster-text"></p>
+            </div> -->
             <div class="s3-poster-info">
-                <p id="s3-poster-text">Here are a few of my recent projects. Click on any poster to view the full case study.</p>
+                <div class="s3-poster-info-text">
+                    <p id="s3-poster-title"></p>
+                    <p id="s3-poster-text"></p>
+                </div>
+                <div class="s3-poster-info-photo">
+                    <img src=""/>
+                </div>
             </div>
         </div>
         <div class = "arrow-button">
@@ -324,6 +334,76 @@
         
         const s3MoveDistance = calculateS3MoveDistance();
         const s3TotalPosters = s3Posters.length;
+        
+        // Slide 3 poster info slideshow
+        const s3PosterInfoData = [
+            { 
+                title: "Cold Justice: Season 7 & 8", 
+                text: "A powerful documentary exploring justice through a modern lens. I traveled nationwide as a camera and production assistant, working closely with former prosecutor Kelly Siegler and her team to help investigate and resolve cold cases.",
+                images: ["image/bts/ColdJustice1.jpg", "image/bts/ColdJustice2.jpg"]
+            },
+            { 
+                title: "Prosecuting Evil Iwth Kelly Siegler", 
+                text: "Investigating the stories behind high-profile criminal cases. I contributed to production and filming interviews with Kelly Siegler as she looks back at homocide investigations in her home state of Texas.",
+                images: ["image/bts/ColdJustice1.jpg"]
+            },
+            { 
+                title: "Onside", 
+                text: "A compelling narrative about redemption and second chances, showcasing a behind the scene look at Major League Soccer organizations. I documented team dynamics, player development, and coaching strategies throughout a competitive season.",
+                images: ["image/bts/Onside1.jpg"]
+            },
+            { 
+                title: "The Fall of the House of Murdaugh", 
+                text: "A documentary series chronicling a prominent family's legal downfall. I assisted in production and cinematography, contributing to in-depth interviews with notable figures including Fox News anchor Martha MacCallum.",
+                images: ["image/bts/ColdJustice1.jpg"]
+            },
+            { 
+                title: "Disrupt and Dismantle", 
+                text: "Breaking barriers and challenging the status quo. I supported the production team on this project hosted by acclaimed journalist and producer Soledad O'Brien.",
+                images: ["image/bts/ColdJustice1.jpg"]
+            },
+            { 
+                title: "Street Outlaws", 
+                text: "Raw, authentic stories from the streets. I contributed to production and event coverage during competitive racing events, capturing authentic narrative content for this motorsports-focused series.",
+                images: ["image/bts/ColdJustice1.jpg"]
+            }
+        ];
+        
+        let s3InfoCurrentSetIndex = 0;
+        let s3InfoCurrentImageIndex = 0;
+        const s3PosterTitle = document.getElementById('s3-poster-title');
+        const s3PosterText = document.getElementById('s3-poster-text');
+        const s3PosterPhotoImg = document.querySelector('.s3-poster-info-photo img');
+
+        function updateS3PosterInfo() {
+            const currentSet = s3PosterInfoData[s3InfoCurrentSetIndex];
+
+            // Update title and text
+            if (s3PosterTitle) s3PosterTitle.textContent = currentSet.title;
+            if (s3PosterText) s3PosterText.textContent = currentSet.text;
+
+            // Determine images for this set (fallback to placeholder)
+            const images = (currentSet.images && currentSet.images.length) ? currentSet.images : ['image.jpg'];
+            const imageIndex = s3InfoCurrentImageIndex % images.length;
+            const imageSrc = images[imageIndex] || 'image.jpg';
+
+            // Update photo element
+            if (s3PosterPhotoImg) {
+                s3PosterPhotoImg.src = imageSrc;
+                s3PosterPhotoImg.alt = `${currentSet.title} BTS ${imageIndex + 1}`;
+            }
+
+            // Advance to next image; when images for this set are exhausted, move to next set
+            s3InfoCurrentImageIndex++;
+            if (s3InfoCurrentImageIndex >= images.length) {
+                s3InfoCurrentSetIndex = (s3InfoCurrentSetIndex + 1) % s3PosterInfoData.length;
+                s3InfoCurrentImageIndex = 0;
+            }
+        }
+        
+        // Start the slideshow - display first item immediately, then update every 10 seconds
+        updateS3PosterInfo();
+        setInterval(updateS3PosterInfo, 10000);
         
         // Clone all posters for infinite loop effect
         const s3PosterClones = Array.from(s3Posters).map(poster => poster.cloneNode(true));
