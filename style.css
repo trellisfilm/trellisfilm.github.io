@@ -200,10 +200,45 @@ body, html {
     flex-direction: column;
 }
 
+.s2_nav-bar {
+    /* Fixed top position*/
+    height: 5vh;
+    /* Flex block for buttons */
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+    /*Misc Properties */
+    padding-top: 2vh;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+    background: transparent;
+    overflow: hidden;
+}
+
+
+.s2_nav-bar a{
+    /* Text properties */
+    font-size: clamp(10px, 1.5vw, 18px);        
+    /*font-family: 'Courier New', Courier, monospace;*/
+    font-family: century-gothic, sans-serif;
+    font-weight: bolder;
+    color: #000000;
+    /* Shape properties */
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    /* Position properties */
+    padding-left: 15px;
+    padding-right: 15px;
+
+    &:hover {
+        color: #D1B000;
+    }
+}
+
 #s2_layout_wrapper {
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
     overflow: hidden;
     flex: 1;
 }
@@ -238,7 +273,7 @@ body, html {
     color: #191919;
     opacity: 0; /* start invisible */
     width: 20%;
-    margin-left: 5%;
+    margin-left: 3%;
     border: none;
     border-top: clamp(2px, 1vw, 3px) solid #000;
     border-radius: 2px;
@@ -260,7 +295,7 @@ body, html {
 
 .s2-fadeLine-top2 {
     color: #191919;
-    width: 90%;
+    width: 94%;
     border: none;
     border-top: clamp(2px, 1vw, 3px) solid #000;
     border-radius: 2px;
@@ -276,14 +311,14 @@ body, html {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 95%;
     flex: 1;
+    padding-left: 2vh;
+    padding-right: 2vh;
     overflow: hidden;
 }
 
 .s2-text-content {
     width: 50%;
-    padding-left: 8vw;
     text-align: left;
 }
 
@@ -614,7 +649,7 @@ body, html {
 @media (max-width: 500px) {
 
     .s1_nav-bar {
-        padding-right: 5px;
+        padding-right: 2vh;
     }
 
     .s1_nav-bar a{
@@ -701,6 +736,16 @@ body, html {
     #slide5 .slide-title {
         padding-top: 15px;
         font-size: 12px;
+    }
+
+    .s2_nav-bar {
+        padding-right: 2vh;
+    }
+
+    .s2_nav-bar a{
+        font-size: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .s2-content-container {
