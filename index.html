@@ -430,27 +430,29 @@
         updateS3PosterInfo();
         s3SlideshowInterval = setInterval(updateS3PosterInfo, 10000);
         
-        // Add click event listeners to posters to lock into a specific set
-        s3Posters.forEach((poster, index) => {
-            poster.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Mark that user has clicked a poster
-                s3UserClickedPoster = true;
-                
-                // Set the current set to the clicked poster's index
-                s3InfoCurrentSetIndex = index;
-                s3InfoCurrentImageIndex = 0;
-                
-                // Update the info immediately
-                updateS3PosterInfo();
-            });
+        // Assign data-index to original posters so clones inherit the index
+        Array.from(s3Posters).forEach((poster, index) => {
+            poster.dataset.index = index;
         });
-        
-        // Clone all posters for infinite loop effect
+
+        // Clone all posters for infinite loop effect (clones will copy data-index)
         const s3PosterClones = Array.from(s3Posters).map(poster => poster.cloneNode(true));
         s3PosterClones.forEach(clone => {
             s3Container.appendChild(clone);
+        });
+
+        // Use event delegation on the container so both originals and clones respond
+        s3Container.addEventListener('click', function(e) {
+            const anchor = e.target.closest('#s3-poster-container a');
+            if (!anchor || !s3Container.contains(anchor)) return;
+            e.preventDefault();
+            s3UserClickedPoster = true;
+            const idx = parseInt(anchor.dataset.index, 10);
+            if (!isNaN(idx)) {
+                s3InfoCurrentSetIndex = idx % s3PosterInfoData.length;
+                s3InfoCurrentImageIndex = 0;
+                updateS3PosterInfo();
+            }
         });
         
         function s3ShowNextSlide() {
