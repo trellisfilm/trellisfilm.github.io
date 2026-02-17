@@ -51,21 +51,19 @@
             </div>
         </div>
     
-        <span class = "arrow-button-1">
+        <div class = "arrow-button-1">
             <button onclick="debouncedDownClick()">▼</button>
-        </span>
+        </div>
     </div>
 
 
     <div id="slide2" class="slide">
         <div id= "s2_layout_wrapper">
-
             <div id="s2-border-top">
                 <hr class="s2-fadeLine-top1">
                 <div class = "slide-title">Tristan Ellis - About Me</div>
                 <hr class="s2-fadeLine-top2">
             </div>
-            
             <div class="s2-content-container">
                 <div class="s2-text-content">
                     <span>
@@ -79,43 +77,55 @@
                     <img src="image/headshot_curve.png" alt="tristan's photo">
                 </div>
             </div>
-
             <div id="s2-border-bottom">
                 <hr class="s2-fadeLine-top2">
                 <div id="s2-alttext">Coded by Dylan Phe.</div>
                 <hr class="s2-fadeLine-top2">
-                <span class = "arrow-button">
-                    <button onclick="debouncedUpClick()">▲</button>
-                    <button onclick="debouncedDownClick()">▼</button>
-                </span>
             </div>
+        </div>
+        <div class = "arrow-button">
+            <button onclick="debouncedUpClick()">▲</button>
+            <button onclick="debouncedDownClick()">▼</button>
         </div>
     </div>
 
     <div id="slide3" class="slide">
         <div id= "transparentCover">
-            <div class = "slide-title">Tristan Ellis - Projects:</div>
             <div class="s3-content-container">
-                <div id="s3-poster-container">
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/ColdJustice.jpg" alt="Poster 1" style="cursor: pointer;">
-                    </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/ProsecutingEvilWithKelly.jpg" alt="Poster 2" style="cursor: pointer;">
-                    </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/Onside.jpg" alt="Poster 3" style="cursor: pointer;">
-                    </a>
-                    <a href="test.pdf" target="_blank">
-                        <img src="image/TheFalloftheHouseOfMurdaugh.jpg" alt="Poster 4" style="cursor: pointer;">
-                    </a>
+                <div class = "slide-title">Tristan Ellis - Projects:</div>
+                <div class="s3-carousel-container">
+                    <button class="s3-nav-button s3-left-button" onclick="s3ShowPrevSlide()">‹</button>
+                    <div id="s3-poster-container">
+                        <a href="test.pdf" target="_blank">
+                            <img src="image/ColdJustice.jpg" alt="Poster 1" style="cursor: pointer;">
+                        </a>
+                        <a href="test.pdf" target="_blank">
+                            <img src="image/ProsecutingEvilWithKelly.jpg" alt="Poster 2" style="cursor: pointer;">
+                        </a>
+                        <a href="test.pdf" target="_blank">
+                            <img src="image/Onside.jpg" alt="Poster 3" style="cursor: pointer;">
+                        </a>
+                        <a href="test.pdf" target="_blank">
+                            <img src="image/TheFalloftheHouseOfMurdaugh.jpg" alt="Poster 4" style="cursor: pointer;">
+                        </a>
+                        <a href="test.pdf" target="_blank">
+                            <img src="image/DisruptAndDismantle.jpg" alt="Poster 4" style="cursor: pointer;">
+                        </a>
+                        <a href="test.pdf" target="_blank">
+                            <img src="image/StreetOutlaws.jpg" alt="Poster 4" style="cursor: pointer;">
+                        </a>
+                    </div>
+                    <button class="s3-nav-button s3-right-button" onclick="s3ShowNextSlide()">›</button>
+                </div>
+                <div class="s3-poster-info">
+                    <p id="s3-poster-text">Here are a few of my recent projects. Click on any poster to view the full case study.</p>
                 </div>
             </div>
+            <div class = "arrow-button">
+                <button onclick="debouncedUpClick()">▲</button>
+                <button onclick="debouncedDownClick()">▼</button>
+            </div>
         </div>
-        <span class = "arrow-button">
-            <button onclick="debouncedUpClick()">▲</button>
-            <button onclick="debouncedDownClick()">▼</button>
-        </span>
     </div>
 
     <div id="slide4" class="slide">
@@ -292,6 +302,61 @@
         s4Slides.forEach(s4Slide => {
             s4Slide.addEventListener('click', s4ShowNextSlide);
         });
+
+        // Slide 3 poster carousel
+        let s3CurrentPosterIndex = 0;
+        const s3Posters = document.querySelectorAll('#s3-poster-container a');
+        const s3MoveDistance = 324; // move 300px per click
+        const s3Container = document.getElementById('s3-poster-container');
+        const s3TotalPosters = s3Posters.length;
+        
+        // Clone all posters for infinite loop effect
+        const s3PosterClones = Array.from(s3Posters).map(poster => poster.cloneNode(true));
+        s3PosterClones.forEach(clone => {
+            s3Container.appendChild(clone);
+        });
+        
+        function s3ShowNextSlide() {
+            s3CurrentPosterIndex++;
+            updateS3PosterPosition();
+            
+            // Reset position seamlessly when reaching clones
+            if (s3CurrentPosterIndex >= s3TotalPosters) {
+                setTimeout(() => {
+                    s3Container.style.transition = 'none';
+                    s3CurrentPosterIndex = 0;
+                    updateS3PosterPosition();
+                    setTimeout(() => {
+                        s3Container.style.transition = 'transform 0.3s ease';
+                    }, 50);
+                }, 300);
+            }
+        }
+        
+        function s3ShowPrevSlide() {
+            if (s3CurrentPosterIndex === 0) {
+                // Jump to clones section
+                s3Container.style.transition = 'none';
+                s3CurrentPosterIndex = s3TotalPosters;
+                updateS3PosterPosition();
+                setTimeout(() => {
+                    s3Container.style.transition = 'transform 0.3s ease';
+                    s3CurrentPosterIndex--;
+                    updateS3PosterPosition();
+                }, 50);
+            } else {
+                s3CurrentPosterIndex--;
+                updateS3PosterPosition();
+            }
+        }
+        
+        function updateS3PosterPosition() {
+            const offset = -s3CurrentPosterIndex * s3MoveDistance;
+            s3Container.style.transform = `translateX(${offset}px)`;
+        }
+        
+        // Add transition for smooth movement
+        s3Container.style.transition = 'transform 0.3s ease';
     </script>
 </body>
 </html>
