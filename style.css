@@ -487,15 +487,8 @@ body, html {
     z-index: 10;
 }
 
-.s3-poster-info-slideshow {
-    margin-top: 2%;
-    width: 90%;
-    height: 20vh;
-    display: hidden;
-}
-
 .s3-poster-info {
-    margin-top: 2%;
+    padding-top: 2%;
     width: 90%;
     display: flex;
     flex-direction: row;
@@ -844,11 +837,13 @@ body, html {
     }
 
     .s3-poster-info {
-        padding-top: 2vh;
-        padding-bottom: 4vh;
         width: 88%;
         display: flex;
         flex-direction: column;
+        flex: 1;
+        overflow: hidden;
+        align-items: center;
+        margin: 0 auto;
     }
 
     .s3-poster-info-text {
@@ -856,7 +851,21 @@ body, html {
     }
 
     .s3-poster-info-photo {
+        flex: 1;
         width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .s3-poster-info-photo img{
+        height: 100%;
+        width: auto;
+        max-width: none;
+        display: block;
+        object-fit: contain;
+        margin: 0 auto;
     }
 
     #s3-poster-title {
